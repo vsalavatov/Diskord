@@ -67,10 +67,10 @@ tasks.withType<DokkaTask> {
         path = file("src/jvmMain/kotlin").toString()
         platforms = listOf("JVM")
     }
-    // sourceRoot {
-    //     path = file("src/jsMain/kotlin").toString()
-    //     platforms = listOf("JS")
-    // }
+    sourceRoot {
+        path = file("src/jsMain/kotlin").toString()
+        platforms = listOf("JS")
+    }
 
     linkMapping {
         dir = "src/commonMain/kotlin"
@@ -82,11 +82,11 @@ tasks.withType<DokkaTask> {
         url = "https://gitlab.com/jesselcorbett/diskord/tree/master/src/jvmMain/kotlin"
         suffix = "#L"
     }
-    // linkMapping {
-    //     dir = "src/jsMain/kotlin"
-    //     url = "https://gitlab.com/jesselcorbett/diskord/tree/master/src/jsMain/kotlin"
-    //     suffix = "#L"
-    // }
+     linkMapping {
+         dir = "src/jsMain/kotlin"
+         url = "https://gitlab.com/jesselcorbett/diskord/tree/master/src/jsMain/kotlin"
+         suffix = "#L"
+     }
 }
 
 kotlin {
@@ -102,7 +102,7 @@ kotlin {
         }
     }
 
-    // js {}
+     js()
 
     sourceSets {
         commonMain {
@@ -154,18 +154,20 @@ kotlin {
             }
         }
 
-        // val jsMain by getting {
-        //     dependencies {
-        //         implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
-        //         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.10.0")
-        //         implementation("io.github.microutils:kotlin-logging-js:1.6.25")
-        //     }
-        // }
-        // val jsTest by getting {
-        //     dependencies {
-        //         implementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
-        //     }
-        // }
+         val jsMain by getting {
+             languageSettings.useExperimentalAnnotation("kotlin.Experimental")
+
+             dependencies {
+                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
+                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.12.0")
+                 implementation("io.github.microutils:kotlin-logging-js:1.6.25")
+             }
+         }
+         val jsTest by getting {
+             dependencies {
+                 implementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
+             }
+         }
     }
 }
 
