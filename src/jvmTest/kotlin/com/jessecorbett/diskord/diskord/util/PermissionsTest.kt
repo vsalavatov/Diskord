@@ -1,9 +1,11 @@
-package com.jessecorbett.diskord.util
+package com.jessecorbett.diskord.diskord.util
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.matchesPredicate
 import com.jessecorbett.diskord.api.model.*
+import com.jessecorbett.diskord.util.computeBasePermissions
+import com.jessecorbett.diskord.util.computeOverwrites
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

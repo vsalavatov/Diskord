@@ -1,3 +1,5 @@
+include("diskord-js-example")
+
 pluginManagement {
     resolutionStrategy {
         eachPlugin {

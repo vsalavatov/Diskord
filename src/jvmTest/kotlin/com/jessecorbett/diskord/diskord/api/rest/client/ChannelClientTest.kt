@@ -1,8 +1,9 @@
-package com.jessecorbett.diskord.api.rest.client
+package com.jessecorbett.diskord.diskord.api.rest.client
 
 import assertk.assertThat
 import assertk.assertions.isSameAs
 import com.jessecorbett.diskord.api.model.Channel
+import com.jessecorbett.diskord.api.rest.client.ChannelClient
 import com.jessecorbett.diskord.api.rest.client.internal.RateLimitInfo
 import com.jessecorbett.diskord.api.rest.client.internal.RateLimitedRestClient
 import com.jessecorbett.diskord.test.waitForTest

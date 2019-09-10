@@ -19,9 +19,11 @@ val okhttpVersion: String by project
 group = "com.jessecorbett"
 version = diskordVersion
 
-repositories {
-    mavenCentral()
-    maven(url = "https://kotlin.bintray.com/kotlinx") // kotlinx.serialization
+allprojects {
+    repositories {
+        mavenCentral()
+        maven(url = "https://kotlin.bintray.com/kotlinx") // kotlinx.serialization
+    }
 }
 
 val dokka by tasks.existing(DokkaTask::class) {
@@ -113,17 +115,14 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$kotlinxCoroutinesVersion")
                 api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.12.0")
                 implementation("io.github.microutils:kotlin-logging-common:1.6.26")
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-logging:$ktorVersion")
+                api("io.ktor:ktor-client-core:$ktorVersion")
+                api("io.ktor:ktor-client-logging:$ktorVersion")
             }
         }
         commonTest {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
-                implementation("io.ktor:ktor-client-mock:$ktorVersion")
-                implementation("com.willowtreeapps.assertk:assertk:0.18")
-                implementation("io.mockk:mockk-common:1.9.3")
             }
         }
 
@@ -151,6 +150,7 @@ kotlin {
                 implementation("com.willowtreeapps.assertk:assertk-jvm:0.18")
                 implementation("io.mockk:mockk:1.9.3")
                 implementation("org.slf4j:slf4j-simple:1.7.26")
+                implementation("com.willowtreeapps.assertk:assertk:0.18")
             }
         }
 
@@ -159,8 +159,12 @@ kotlin {
 
              dependencies {
                  implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
-                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.12.0")
+                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.1")
+                 api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.12.0")
+                 implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
                  implementation("io.github.microutils:kotlin-logging-js:1.6.25")
+                 implementation("io.ktor:ktor-client-js:$ktorVersion")
+                 implementation("io.ktor:ktor-client-logging-js:$ktorVersion")
              }
          }
          val jsTest by getting {

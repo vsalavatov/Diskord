@@ -1,4 +1,4 @@
-package com.jessecorbett.diskord.util
+package com.jessecorbett.diskord.diskord.util
 
 import assertk.all
 import assertk.assertThat
@@ -6,6 +6,7 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isFailure
 import assertk.assertions.isInstanceOf
 import assertk.thrownError
+import com.jessecorbett.diskord.util.Colors
 import kotlin.test.Test
 
 class ColorsTest {

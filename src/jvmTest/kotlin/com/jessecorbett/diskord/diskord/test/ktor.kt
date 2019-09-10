@@ -1,4 +1,4 @@
-package com.jessecorbett.diskord.test
+package com.jessecorbett.diskord.diskord.test
 
 import com.jessecorbett.diskord.api.rest.client.internal.DISCORD_API_URL
 import io.ktor.client.HttpClient

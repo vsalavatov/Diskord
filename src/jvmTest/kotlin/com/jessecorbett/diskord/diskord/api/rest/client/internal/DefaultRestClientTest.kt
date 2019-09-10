@@ -1,9 +1,10 @@
-package com.jessecorbett.diskord.api.rest.client.internal
+package com.jessecorbett.diskord.diskord.api.rest.client.internal
 
 import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.isEqualTo
-import com.jessecorbett.diskord.test.setupHttpClientMock
+import com.jessecorbett.diskord.api.rest.client.internal.DefaultRestClient
+import com.jessecorbett.diskord.diskord.test.setupHttpClientMock
 import com.jessecorbett.diskord.test.waitForTest
 import com.jessecorbett.diskord.util.DiskordInternals
 import io.ktor.client.engine.mock.respond
@@ -36,11 +37,12 @@ internal class DefaultRestClientTest {
         val httpClient = setupHttpClientMock(requestUrl) { request ->
             assertThat(request.headers["Accept"]).isEqualTo("application/json")
 
-            respond(responseText, headers=responseHeaders)
+            respond(responseText, headers = responseHeaders)
         }
 
         val client = DefaultRestClient(client = httpClient)
-        val response = waitForTest { client.getRequest(requestUrl, requestHeaders) }
+        val response =
+            waitForTest { client.getRequest(requestUrl, requestHeaders) }
 
         assertThat(response.body).isEqualTo(responseText)
         assertThat(response.headers).contains("Content-Type", "application/json")
