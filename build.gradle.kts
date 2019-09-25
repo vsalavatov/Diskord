@@ -161,10 +161,12 @@ kotlin {
                  implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
                  api("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.1")
                  api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.12.0")
-                 implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
-                 implementation("io.github.microutils:kotlin-logging-js:1.6.25")
-                 implementation("io.ktor:ktor-client-js:$ktorVersion")
-                 implementation("io.ktor:ktor-client-logging-js:$ktorVersion")
+                 api("io.github.microutils:kotlin-logging-js:1.6.25")
+                 api("io.ktor:ktor-client-js:$ktorVersion")
+                 api("io.ktor:ktor-client-logging-js:$ktorVersion")
+//                 api(npm("text-encoding"))
+//                 api(npm("node-fetch"))
+//                 api(npm("ws"))
              }
          }
          val jsTest by getting {
@@ -264,5 +266,5 @@ signing {
         useInMemoryPgpKeys(signingKey, signingPassword)
     }
 
-    publishing.publications.forEach { sign(it) }
+//    publishing.publications.forEach { sign(it) }
 }
