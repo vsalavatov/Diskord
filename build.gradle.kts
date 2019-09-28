@@ -22,6 +22,7 @@ version = diskordVersion
 allprojects {
     repositories {
         mavenCentral()
+        jcenter() // Not needed at compile time, but needed for dokka
         maven(url = "https://kotlin.bintray.com/kotlinx") // kotlinx.serialization
     }
 }
@@ -69,10 +70,10 @@ tasks.withType<DokkaTask> {
         path = file("src/jvmMain/kotlin").toString()
         platforms = listOf("JVM")
     }
-    sourceRoot {
-        path = file("src/jsMain/kotlin").toString()
-        platforms = listOf("JS")
-    }
+    // sourceRoot {
+    //     path = file("src/jsMain/kotlin").toString()
+    //     platforms = listOf("JS")
+    // }
 
     linkMapping {
         dir = "src/commonMain/kotlin"
@@ -84,11 +85,11 @@ tasks.withType<DokkaTask> {
         url = "https://gitlab.com/jesselcorbett/diskord/tree/master/src/jvmMain/kotlin"
         suffix = "#L"
     }
-     linkMapping {
-         dir = "src/jsMain/kotlin"
-         url = "https://gitlab.com/jesselcorbett/diskord/tree/master/src/jsMain/kotlin"
-         suffix = "#L"
-     }
+    // linkMapping {
+    //     dir = "src/jsMain/kotlin"
+    //     url = "https://gitlab.com/jesselcorbett/diskord/tree/master/src/jsMain/kotlin"
+    //     suffix = "#L"
+    // }
 }
 
 kotlin {
@@ -104,7 +105,7 @@ kotlin {
         }
     }
 
-     js()
+    // js {}
 
     sourceSets {
         commonMain {
@@ -115,14 +116,17 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:$kotlinxCoroutinesVersion")
                 api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-common:0.12.0")
                 implementation("io.github.microutils:kotlin-logging-common:1.6.26")
-                api("io.ktor:ktor-client-core:$ktorVersion")
-                api("io.ktor:ktor-client-logging:$ktorVersion")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
             }
         }
         commonTest {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-test-common:$kotlinVersion")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:$kotlinVersion")
+                implementation("io.ktor:ktor-client-mock:$ktorVersion")
+                implementation("com.willowtreeapps.assertk:assertk:0.18")
+                implementation("io.mockk:mockk-common:1.9.3")
             }
         }
 
@@ -150,30 +154,21 @@ kotlin {
                 implementation("com.willowtreeapps.assertk:assertk-jvm:0.18")
                 implementation("io.mockk:mockk:1.9.3")
                 implementation("org.slf4j:slf4j-simple:1.7.26")
-                implementation("com.willowtreeapps.assertk:assertk:0.18")
             }
         }
 
-         val jsMain by getting {
-             languageSettings.useExperimentalAnnotation("kotlin.Experimental")
-
-             dependencies {
-                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
-                 api("org.jetbrains.kotlinx:kotlinx-coroutines-core-js:1.3.1")
-                 api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.12.0")
-                 api("io.github.microutils:kotlin-logging-js:1.6.25")
-                 api("io.ktor:ktor-client-js:$ktorVersion")
-                 api("io.ktor:ktor-client-logging-js:$ktorVersion")
-//                 api(npm("text-encoding"))
-//                 api(npm("node-fetch"))
-//                 api(npm("ws"))
-             }
-         }
-         val jsTest by getting {
-             dependencies {
-                 implementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
-             }
-         }
+        // val jsMain by getting {
+        //     dependencies {
+        //         implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
+        //         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.10.0")
+        //         implementation("io.github.microutils:kotlin-logging-js:1.6.25")
+        //     }
+        // }
+        // val jsTest by getting {
+        //     dependencies {
+        //         implementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
+        //     }
+        // }
     }
 }
 
@@ -266,5 +261,5 @@ signing {
         useInMemoryPgpKeys(signingKey, signingPassword)
     }
 
-//    publishing.publications.forEach { sign(it) }
+    publishing.publications.forEach { sign(it) }
 }

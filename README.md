@@ -18,9 +18,10 @@ repositories {
 
 dependencies {
     // Only if gradle >= 5.3
-    implementation 'com.jessecorbett:diskord:1.5.0'
+    implementation 'com.jessecorbett:diskord:1.5.1'
+
     // Valid for all gradle versions
-    implementation 'com.jessecorbett:diskord-jvm:1.5.0'
+    implementation 'com.jessecorbett:diskord-jvm:1.5.1'
 }
 ```
 
@@ -29,7 +30,7 @@ dependencies {
 <dependency>
     <groupId>com.jessecorbett</groupId>
     <artifactId>diskord-jvm</artifactId>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
 </dependency>
 ```
 
@@ -145,8 +146,8 @@ fun main() = runBlocking {
 * Can I contact you to ask a question/contribute to the project/report a bug/tell you this is all shit?
     * [Go for it!](https://discord.gg/UPTWsZ5)
 * What if I'm hip and cool, and I want to use a newer more ~~unstable~~ exciting version?
-    * You can use our development versions by using the gitlab maven repository
-        * Repository URL https://gitlab.com/api/v4/projects/10363714/packages/maven
+    * You can use our development versions by using the snapshot repository
+        * Repository URL https://oss.sonatype.org/content/repositories/snapshots/
         * Artifact directory https://gitlab.com/jesselcorbett/diskord/-/packages
 
 ## Things to do
