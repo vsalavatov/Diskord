@@ -12,6 +12,8 @@ import com.jessecorbett.diskord.util.DiskordInternals
 import io.ktor.client.request.forms.formData
 import io.ktor.http.Headers
 import io.ktor.http.HttpHeaders
+import io.ktor.util.InternalAPI
+import io.ktor.utils.io.core.ByteReadPacket
 import kotlinx.serialization.list
 
 /**
@@ -143,7 +145,7 @@ class ChannelClient(
         attachment: FileData
     ) = postMultipartRequest("/channels/$channelId/messages", message, CreateMessage.serializer(), Message.serializer()) {
         formData {
-            append("file", attachment.packet, Headers.build {
+            append("file", attachment.packet as ByteReadPacket, Headers.build {
                 append(HttpHeaders.ContentDisposition,
                     """form-data; name="file"; filename="${attachment.filename}"""")
             })

@@ -71,6 +71,14 @@ val jvmJavadocJar by tasks.creating(Jar::class) {
     // from("$buildDir/javadoc")
 }
 
+val jsJavadocJar by tasks.creating(Jar::class) {
+    group = "build"
+    // dependsOn(dokkaJavadoc)
+    archiveBaseName.set("${project.name}-js")
+    archiveClassifier.set("javadoc")
+    // from("$buildDir/javadoc")
+}
+
 val metadataJavadocJar by tasks.creating(Jar::class) {
     group = "build"
     archiveBaseName.set("${project.name}-metadata")
@@ -84,13 +92,17 @@ kotlin {
         }
     }
 
+    js {
+        mavenPublication {
+            artifact(jsJavadocJar)
+        }
+    }
+
     metadata {
         mavenPublication {
             artifact(metadataJavadocJar)
         }
     }
-
-    // js {}
 
     sourceSets {
         commonMain {
@@ -146,18 +158,23 @@ kotlin {
             }
         }
 
-        // val jsMain by getting {
-        //     dependencies {
-        //         implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
-        //         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:0.10.0")
-        //         implementation("io.github.microutils:kotlin-logging-js:1.6.25")
-        //     }
-        // }
-        // val jsTest by getting {
-        //     dependencies {
-        //         implementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
-        //     }
-        // }
+         val jsMain by getting {
+             languageSettings.useExperimentalAnnotation("kotlin.Experimental")
+
+             dependencies {
+                 implementation("org.jetbrains.kotlin:kotlin-stdlib-js:$kotlinVersion")
+                 api("org.jetbrains.kotlinx:kotlinx-serialization-runtime-js:$kotlinSerializationVersion")
+                 api("org.jetbrains.kotlinx:kotlinx-io-js:0.1.15")
+                 api("io.ktor:ktor-client-js:$ktorVersion")
+                 implementation("io.ktor:ktor-client-logging-js:$ktorVersion")
+                 implementation("io.github.microutils:kotlin-logging-js:1.6.25")
+             }
+         }
+         val jsTest by getting {
+             dependencies {
+                 implementation("org.jetbrains.kotlin:kotlin-test-js:$kotlinVersion")
+             }
+         }
     }
 }
 

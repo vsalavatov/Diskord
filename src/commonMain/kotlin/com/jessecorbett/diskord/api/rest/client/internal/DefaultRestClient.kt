@@ -15,7 +15,7 @@ import io.ktor.client.response.HttpResponse
 import io.ktor.http.ContentType
 import io.ktor.http.content.PartData
 import io.ktor.http.content.TextContent
-import kotlinx.coroutines.io.readUTF8Line
+import io.ktor.utils.io.readUTF8Line
 
 private val DEFAULT_CLIENT = HttpClient(httpClient()) {
     install(Logging) {
