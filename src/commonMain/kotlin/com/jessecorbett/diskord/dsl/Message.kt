@@ -91,6 +91,7 @@ fun Embed.field(name: String, value: String, inline: Boolean) = fields.add(Embed
  */
 class CombinedMessageEmbed(
     var text: String = "",
+    var tts: Boolean = false,
     var title: String? = null,
     var description: String? = null,
     var url: String? = null,

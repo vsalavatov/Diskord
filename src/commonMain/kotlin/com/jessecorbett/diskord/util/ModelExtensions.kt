@@ -207,6 +207,19 @@ suspend fun ChannelClient.sendMessage(message: String = "", embed: Embed? = null
     createMessage(CreateMessage(content = message, embed = embed))
 
 /**
+ * Calls [ChannelClient.createMessage] for tts messages without needing to create a [CreateMessage] object first.
+ *
+ * @param message The text message to send.
+ * @param embed The embed to include with the message.
+ *
+ * @return the created [Message].
+ * @throws com.jessecorbett.diskord.api.exception.DiscordException upon client errors.
+ */
+suspend fun ChannelClient.sendMessageTTS(message: String = "", embed: Embed? = null) =
+    createMessage(CreateMessage(content = message, tts = true, embed = embed))
+
+
+/**
  * Calls [ChannelClient.createMessage] for text messages without needing to create a [CreateMessage] object first.
  *
  * @param message The text message to send.
@@ -220,6 +233,19 @@ suspend fun ChannelClient.sendMessage(message: String = "", embedDsl: Embed.() -
     sendMessage(message, embed(embedDsl))
 
 /**
+ * Calls [ChannelClient.createMessage] for TTS messages without needing to create a [CreateMessage] object first.
+ *
+ * @param message The text message to send.
+ * @param embedDsl A usage of the message embed DSL to create the embed object.
+ * @see embed
+ *
+ * @return the created [Message].
+ * @throws com.jessecorbett.diskord.api.exception.DiscordException upon client errors.
+ */
+suspend fun ChannelClient.sendMessageTTS(message: String = "", embedDsl: Embed.() -> Unit) =
+    sendMessageTTS(message, embed(embedDsl))
+
+/**
  * Calls [ChannelClient.createMessage] for sending messages from the [com.jessecorbett.diskord.dsl.CombinedMessageEmbed].
  *
  * @param block The DSL call to build a combination text and embed content.
@@ -229,7 +255,11 @@ suspend fun ChannelClient.sendMessage(message: String = "", embedDsl: Embed.() -
  * @throws com.jessecorbett.diskord.api.exception.DiscordException upon client errors.
  */
 suspend fun ChannelClient.sendMessage(block: CombinedMessageEmbed.() -> Unit) =
-    CombinedMessageEmbed().apply(block).let { sendMessage(it.text, it.embed()) }
+    CombinedMessageEmbed().apply(block)
+        .let {
+            if (it.tts) sendMessageTTS(it.text, it.embed())
+            else sendMessage(it.text, it.embed())
+        }
 
 /**
  * Calls [ChannelClient.createMessage] for text messages without needing to create a [CreateMessage] object first.
